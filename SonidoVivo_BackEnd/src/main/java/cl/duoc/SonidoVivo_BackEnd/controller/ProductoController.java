@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/productos")
 @CrossOrigin(origins = "http://localhost:5173")
@@ -41,7 +41,7 @@ public class ProductoController {
 
     @PostMapping
     public ResponseEntity<Producto> registrar(
-            @RequestBody Producto producto) {
+            @Valid @RequestBody Producto producto) {
 
         Producto nuevo =
                 productoService.registrar(producto);
@@ -54,6 +54,7 @@ public class ProductoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Producto> actualizar(
+            @Valid
             @PathVariable String id,
             @RequestBody Producto producto) {
 

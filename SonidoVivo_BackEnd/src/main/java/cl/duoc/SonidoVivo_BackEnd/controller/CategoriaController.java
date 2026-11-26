@@ -2,6 +2,7 @@ package cl.duoc.SonidoVivo_BackEnd.controller;
 
 import cl.duoc.SonidoVivo_BackEnd.model.Categoria;
 import cl.duoc.SonidoVivo_BackEnd.service.CategoriaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<Categoria> registrar(
-            @RequestBody Categoria categoria) {
+            @Valid @RequestBody Categoria categoria) {
 
         Categoria nueva =
                 categoriaService.registrar(categoria);
@@ -53,6 +54,7 @@ public class CategoriaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> actualizar(
+            @Valid
             @PathVariable Long id,
             @RequestBody Categoria categoria) {
 
