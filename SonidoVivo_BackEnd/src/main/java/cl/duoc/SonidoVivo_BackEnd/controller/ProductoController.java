@@ -1,7 +1,11 @@
 package cl.duoc.SonidoVivo_BackEnd.controller;
 
+import cl.duoc.SonidoVivo_BackEnd.dto.ProductoRequest;
+import cl.duoc.SonidoVivo_BackEnd.dto.StockUpdateRequest;
 import cl.duoc.SonidoVivo_BackEnd.model.Producto;
 import cl.duoc.SonidoVivo_BackEnd.service.ProductoService;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/productos")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ProductoController {
 
     @Autowired
@@ -40,8 +43,9 @@ public class ProductoController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Producto> registrar(
-            @RequestBody Producto producto) {
+            @Valid @RequestBody ProductoRequest producto) {
 
         Producto nuevo =
                 productoService.registrar(producto);
@@ -53,26 +57,25 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Producto> actualizar(
             @PathVariable String id,
-            @RequestBody Producto producto) {
-
-        Producto existente =
-                productoService.buscarPorId(id);
-
-        if (existente == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        producto.setId(id);
-
-        Producto actualizado =
-                productoService.actualizar(producto);
+            @Valid @RequestBody ProductoRequest producto) {
+        Producto actualizado = productoService.actualizar(id, producto);
 
         return ResponseEntity.ok(actualizado);
     }
 
+    @PatchMapping("/{id}/stock")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<Producto> actualizarStock(
+            @PathVariable String id,
+            @Valid @RequestBody StockUpdateRequest request) {
+        return ResponseEntity.ok(productoService.actualizarStock(id, request));
+    }
+
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Void> eliminar(
             @PathVariable String id) {
 

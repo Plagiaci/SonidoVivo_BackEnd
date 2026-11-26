@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SonidoVivo_BackEnd.iml" filepath="$PROJECT_DIR$/.idea/SonidoVivo_BackEnd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SonidoVivo_BackEnd/SonidoVivo_BackEnd.iml" filepath="$PROJECT_DIR$/SonidoVivo_BackEnd/SonidoVivo_BackEnd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/a.iml" filepath="$PROJECT_DIR$/.idea/a.iml" />
     </modules>
   </component>
 </project>

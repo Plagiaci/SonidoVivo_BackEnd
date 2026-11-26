@@ -2,6 +2,8 @@ package cl.duoc.SonidoVivo_BackEnd.controller;
 
 import cl.duoc.SonidoVivo_BackEnd.model.Categoria;
 import cl.duoc.SonidoVivo_BackEnd.service.CategoriaService;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categorias")
-@CrossOrigin(origins = "http://localhost:5173")
 public class CategoriaController {
 
     @Autowired
@@ -39,8 +40,9 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Categoria> registrar(
-            @RequestBody Categoria categoria) {
+            @Valid @RequestBody Categoria categoria) {
 
         Categoria nueva =
                 categoriaService.registrar(categoria);
@@ -52,9 +54,10 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Categoria> actualizar(
             @PathVariable Long id,
-            @RequestBody Categoria categoria) {
+            @Valid @RequestBody Categoria categoria) {
 
         Categoria existente =
                 categoriaService.buscarPorId(id);
@@ -72,6 +75,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Void> eliminar(
             @PathVariable Long id) {
 
